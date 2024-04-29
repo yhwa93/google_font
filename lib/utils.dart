@@ -47,6 +47,9 @@ List<DateTime> daysInRange(DateTime first, DateTime last) {
   );
 }
 
+//현재 날짜
 final kToday = DateTime.now();
-final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
-final kLastDay = DateTime(kToday.year, kToday.month + 3, kToday.day);
+
+//달력 시작과 끝 날짜
+final kFirstDay = DateTime(2024, 1, 1);
+final kLastDay = DateTime(kToday.year + 10, kToday.month, kToday.day);

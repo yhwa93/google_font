@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../utils.dart';
@@ -150,16 +152,22 @@ class _TableEventsExampleState extends State<TableEventsExample> {
 
                     //투데이빌더
                     todayBuilder: (context, day, focusedDay) {
-                      return Container(
-                        color: Colors.green,
-                        margin: EdgeInsets.zero,
-                        alignment: Alignment.topCenter,
-                        child: Text(
-                          day.day.toString(),
-                          style: const TextStyle(
-                            color: Colors.white,
+                      return Column(
+                        children: [
+                          Text(
+                            day.day.toString(),
+                            style: const TextStyle(
+                              color: Colors.blue,
+                            ),
                           ),
-                        ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Image.asset(
+                              "assets/images/calendar_inactive_bg.png",
+                              width: 45,
+                            ),
+                          ),
+                        ],
                       );
                     },
 
@@ -187,9 +195,9 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                             ),
                           ),
                           Align(
-                            alignment: const Alignment(0.0, 0.5),
+                            alignment: Alignment.center,
                             child: Image.asset(
-                              "assets/images/calendar_inactive.png",
+                              "assets/images/calendar_inactive_bg.png",
                               width: 45,
                             ),
                           ),
@@ -199,34 +207,27 @@ class _TableEventsExampleState extends State<TableEventsExample> {
 
                     //셀렉티드 빌더
                     selectedBuilder: (context, day, focusedDay) {
-                      return Container(
-                        margin: EdgeInsets.zero,
-                        decoration: const BoxDecoration(
-                          color: Colors.blue,
-                        ),
-                        alignment: Alignment.topCenter,
-                        child: Text(
-                          day.day.toString(),
-                          style: const TextStyle(
-                            color: Colors.white,
+                      return Column(
+                        children: [
+                          Text(
+                            day.day.toString(),
+                            style: const TextStyle(
+                              color: Colors.red,
+                            ),
                           ),
-                        ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Image.asset(
+                              "assets/images/calendar_inactive_bg.png",
+                              width: 45,
+                            ),
+                          ),
+                        ],
                       );
                     },
 
                     //디폴트 빌더
                     defaultBuilder: (context, day, focusedDay) {
-                      // return Container(
-                      //   margin: EdgeInsets.zero,
-                      //   alignment: Alignment.topCenter,
-                      //   child: Text(
-                      //     day.day.toString(),
-                      //     style: const TextStyle(
-                      //       color: Colors.black87,
-                      //     ),
-                      //   ),
-                      // );
-
                       return Column(
                         children: [
                           Text(
@@ -236,9 +237,9 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                             ),
                           ),
                           Align(
-                            alignment: const Alignment(0.0, 0.5),
+                            alignment: Alignment.center,
                             child: Image.asset(
-                              "assets/images/calendar_inactive.png",
+                              "assets/images/calendar_active_bg.png",
                               width: 45,
                             ),
                           ),
@@ -290,9 +291,17 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                     }
                   },
                   calendarStyle: const CalendarStyle(
-                    // Use `CalendarStyle` to customize the UI
-
                     outsideDaysVisible: false,
+                    outsideTextStyle: TextStyle(
+                      color: Colors.transparent,
+                    ),
+                    outsideDecoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      image: DecorationImage(
+                        fit: BoxFit.fitWidth,
+                        image:AssetImage('assets/images/calendar_inactive_bg.png'),
+                      ),
+                    ),
                   ),
                   rangeSelectionMode: _rangeSelectionMode,
 
@@ -301,11 +310,14 @@ class _TableEventsExampleState extends State<TableEventsExample> {
 
                   //비활성화 지정
                   enabledDayPredicate: (date) {
-                    //https://jutole.tistory.com/96
+                    String currentMonth = DateFormat('MM').format(DateTime.now());
+                    String dateMonth = DateFormat('MM').format(date);
 
-                    final bool a = date.isAfter(DateTime.now());
+                    if(currentMonth == dateMonth){
+                      return true;
+                    } 
 
-                    return !a;
+                    return false;
                   },
                   eventLoader: _getEventsForDay,
                   onDaySelected: _onDaySelected,
