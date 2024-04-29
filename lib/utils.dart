@@ -50,6 +50,6 @@ List<DateTime> daysInRange(DateTime first, DateTime last) {
 //현재 날짜
 final kToday = DateTime.now();
 
-//달력 시작과 끝 날짜
+//달력 시작과 끝 날짜 (10년치)
 final kFirstDay = DateTime(2024, 1, 1);
 final kLastDay = DateTime(kToday.year + 10, kToday.month, kToday.day);
