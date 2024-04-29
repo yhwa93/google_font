@@ -300,8 +300,12 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                   startingDayOfWeek: StartingDayOfWeek.sunday,
 
                   //비활성화 지정
-                  enabledDayPredicate: (day) {
-                    return true;
+                  enabledDayPredicate: (date) {
+                    //https://jutole.tistory.com/96
+
+                    final bool a = date.isAfter(DateTime.now());
+
+                    return !a;
                   },
                   eventLoader: _getEventsForDay,
                   onDaySelected: _onDaySelected,
